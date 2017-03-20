@@ -66,5 +66,5 @@ src_install() {
 
 	doheader -r include/openssl
 
-	dodoc -r *.md
+	dodoc *.md
 }
