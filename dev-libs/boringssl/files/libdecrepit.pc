@@ -1,0 +1,16 @@
+#libdecrepit pkg-config source file
+
+prefix=/usr
+exec_prefix=${prefix}
+libdir=/usr/lib
+includedir=${prefix}/include
+
+Name: BoringSSL-libdecrepit
+Description: Decrepit ssl and crypto functions
+Version: @VERSION@
+Requires:
+Requires.private: libcrypto libssl
+Conflicts:
+Libs: -L${libdir} -ldecrepit
+Libs.private:  -lcrypto -lssl 
+Cflags: -I${includedir}
