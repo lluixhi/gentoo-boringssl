@@ -12,7 +12,7 @@ COMMIT_ID="73812e06b0921b5c81d4a6c2bb21ff705afa414f"
 SRC_URI="https://boringssl.googlesource.com/boringssl/+archive/${COMMIT_ID}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ISC openssl"
-SLOT="0/20170320"
+SLOT="0/${PV}"
 KEYWORDS="~amd64"
 IUSE="+asm static-libs"
 
