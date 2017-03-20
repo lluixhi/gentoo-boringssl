@@ -6,29 +6,28 @@ EAPI=6
 inherit cmake-utils
 
 DESCRIPTION="A fork of OpenSSL designed for Google's needs."
-
 HOMEPAGE="https://boringssl.googlesource.com/boringssl/"
-KEYWORDS="~amd64 ~x86"
-IUSE="+asm static-libs"
+
 COMMIT_ID="73812e06b0921b5c81d4a6c2bb21ff705afa414f"
 SRC_URI="https://boringssl.googlesource.com/boringssl/+archive/${COMMIT_ID}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="ISC openssl"
 SLOT="0/20170320"
+KEYWORDS="~amd64"
+IUSE="+asm static-libs"
 
 RDEPEND="
 	!dev-libs/openssl
 	!dev-libs/libressl
 	dev-lang/go
 	dev-lang/perl"
-
 DEPEND="${RDEPEND}"
 PDEPEND="app-misc/ca-certificates"
 
 src_unpack() {
 	mkdir "${WORKDIR}/${P}" || die
 	cd "${WORKDIR}/${P}" || die
-	unpack "${A}"
+	unpack ${A}
 }
 
 src_prepare() {
