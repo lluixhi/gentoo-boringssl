@@ -44,15 +44,15 @@ multilib_src_compile() {
 	cmake-utils_src_compile
 	sed \
 		-e 's/@VERSION@/'"${PV}"'/' \
-		-e 's/@LIBDIR@/'"$(get_libdir)"'/' \
+		-e 's/@LIBDIR@/'"$(get_abi_LIBDIR)"'/' \
 		"${FILESDIR}"/libcrypto.pc > libcrypto.pc || die
 	sed \
 		-e 's/@VERSION@/'"${PV}"'/' \
-		-e 's/@LIBDIR@/'"$(get_libdir)"'/' \
+		-e 's/@LIBDIR@/'"$(get_abi_LIBDIR)"'/' \
 		"${FILESDIR}"/libssl.pc > libssl.pc || die
 	sed \
 		-e 's/@VERSION@/'"${PV}"'/' \
-		-e 's/@LIBDIR@/'"$(get_libdir)"'/' \
+		-e 's/@LIBDIR@/'"$(get_abi_LIBDIR)"'/' \
 		"${FILESDIR}"/libdecrepit.pc > libdecrepit.pc || die
 }
 
@@ -63,7 +63,7 @@ multilib_src_install() {
 	dolib.so "${BUILD_DIR}"/ssl/libssl.so
 	$([ "${ABI}" = "${DEFAULT_ABI}" ]) && dobin "${BUILD_DIR}"/tool/bssl
 
-	insinto /usr/$(get_libdir)/pkgconfig
+	insinto /usr/$(get_abi_LIBDIR)/pkgconfig
 	doins libssl.pc
 	doins libcrypto.pc
 	doins libdecrepit.pc
