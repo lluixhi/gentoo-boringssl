@@ -2,7 +2,7 @@
 
 prefix=/usr
 exec_prefix=${prefix}
-libdir=/usr/lib
+libdir=/usr/@LIBDIR@
 includedir=${prefix}/include
 
 Name: BoringSSL-libdecrepit
