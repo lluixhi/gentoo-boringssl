@@ -1,3 +1,15 @@
+diff -Naur Net-SSLeay-1.80.orig/SSLeay.xs Net-SSLeay-1.80/SSLeay.xs
+--- Net-SSLeay-1.80.orig/SSLeay.xs	2017-01-04 13:39:08.000000000 -0800
++++ Net-SSLeay-1.80/SSLeay.xs	2017-03-21 17:15:49.091776823 -0700
+@@ -190,7 +190,7 @@
+ #ifdef OPENSSL_FIPS
+ #include <openssl/fips.h>
+ #endif
+-#if OPENSSL_VERSION_NUMBER >= 0x10000000L
++#if OPENSSL_VERSION_NUMBER >= 0x10000000L && !defined(OPENSSL_IS_BORINGSSL)
+ #include <openssl/ocsp.h>
+ #endif
+ #undef BLOCK
 diff -Naur Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm Net-SSLeay-1.80/inc/Module/Install/PRIVATE/Net/SSLeay.pm
 --- Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm	2017-01-04 13:39:55.000000000 -0800
 +++ Net-SSLeay-1.80/inc/Module/Install/PRIVATE/Net/SSLeay.pm	2017-03-21 17:11:52.867951191 -0700
