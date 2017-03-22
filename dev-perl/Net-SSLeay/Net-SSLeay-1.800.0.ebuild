@@ -37,6 +37,8 @@ DEPEND="${RDEPEND}
 export OPTIMIZE="$CFLAGS"
 export OPENSSL_PREFIX=${EPREFIX}/usr
 
+PATCHES=( "${FILESDIR}"/1.80-boringssl.patch )
+
 src_prepare() {
 	sed -i \
 		-e "/\$opts->{optimize} = '-O2 -g';/d" \

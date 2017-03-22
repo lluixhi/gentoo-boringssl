@@ -1,0 +1,106 @@
+diff -Naur Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm Net-SSLeay-1.80/inc/Module/Install/PRIVATE/Net/SSLeay.pm
+--- Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm	2017-01-04 13:39:55.000000000 -0800
++++ Net-SSLeay-1.80/inc/Module/Install/PRIVATE/Net/SSLeay.pm	2017-03-21 17:08:57.991158946 -0700
+@@ -24,20 +24,7 @@
+     $self->requires_external_cc;
+ 
+     my $prefix = $self->find_openssl_prefix;
+-    my $exec   = $self->find_openssl_exec($prefix);
+-
+-    unless (-x $exec) {
+-        print <<EOM;
+-*** Could not find OpenSSL
+-    If it's already installed, please set the OPENSSL_PREFIX environment
+-    variable accordingly. If it isn't installed yet, get the latest version
+-    from http://www.openssl.org/.
+-EOM
+-        exit 0; # according http://wiki.cpantesters.org/wiki/CPANAuthorNotes this is best-practice when "missing library"
+-    }
+-
+-    $self->check_openssl_version($prefix, $exec);
+-    my $opts = $self->ssleay_get_build_opts($prefix, $exec);
++    my $opts = $self->ssleay_get_build_opts($prefix);
+ 
+     $self->makemaker_args(
+         CCCDLFLAGS => $opts->{cccdlflags},
+@@ -58,7 +45,7 @@
+ }
+ 
+ sub ssleay_get_build_opts {
+-    my ($self, $prefix, $exec) = @_;
++    my ($self, $prefix) = @_;
+ 
+     my $opts = {
+         lib_links  => [],
+@@ -209,71 +196,4 @@
+     return;
+ }
+ 
+-sub find_openssl_exec {
+-    my ($self, $prefix) = @_;
+-
+-    my $exe_path;
+-    for my $subdir (qw( bin sbin out32dll ia64_exe alpha_exe )) {
+-        my $path = File::Spec->catfile($prefix, $subdir, "openssl$Config{_exe}");
+-        if ( -x $path ) {
+-            return $path;
+-        }
+-    }
+-    ($prefix) = $self->check_no_path
+-       and return $prefix;
+-    return;
+-}
+-
+-sub check_openssl_version {
+-    my ($self, $prefix, $exec) = @_;
+-    my ($major, $minor, $letter);
+-
+-    {
+-        my $pipe = gensym();
+-        open($pipe, "$exec version |")
+-            or die "Could not execute $exec";
+-        my $output = <$pipe>;
+-        chomp $output;
+-        close $pipe;
+-
+-	if ( ($major, $minor, $letter) = $output =~ /^OpenSSL\s+(\d+\.\d+)\.(\d+)([a-z]?)/ ) {
+-	    print "*** Found OpenSSL-${major}.${minor}${letter} installed in $prefix\n";
+-	} elsif ( ($major, $minor) = $output =~ /^LibreSSL\s+(\d+\.\d+)/ ) {
+-	    print "*** Found LibreSSL-${major}.${minor} installed in $prefix\n";
+-	} else {
+-            die <<EOM
+-*** OpenSSL version test failed
+-    (`$output' has been returned)
+-    Either you have bogus OpenSSL or a new version has changed the version
+-    number format. Please inform the authors!
+-EOM
+-        }
+-    }
+-
+-    if ($major < 0.9 || ($major == 0.9 && $minor < 3)) {
+-        print <<EOM;
+-*** That's too old!
+-    Please upgrade OpenSSL to the latest version (http://www.openssl.org/)
+-EOM
+-        exit 0; # according http://wiki.cpantesters.org/wiki/CPANAuthorNotes this is best-practice when "missing library"
+-    }
+-
+-    if ($major == 1.1 && $minor > 0) {
+-        print <<EOM;
+-*** That's newer than what this module was tested with
+-    You should consider checking if there is a newer release of this module
+-    available. Everything will probably work OK, though.
+-EOM
+-    }
+-}
+-
+-sub fixpath {
+-    my ($self, $text) = @_;
+-
+-    my $sep = File::Spec->catdir('');
+-    $text =~ s{\b/}{$sep}g;
+-
+-    return $text;
+-}
+-
+ 1;
