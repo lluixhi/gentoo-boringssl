@@ -1,6 +1,6 @@
 diff -Naur Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm Net-SSLeay-1.80/inc/Module/Install/PRIVATE/Net/SSLeay.pm
 --- Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm	2017-01-04 13:39:55.000000000 -0800
-+++ Net-SSLeay-1.80/inc/Module/Install/PRIVATE/Net/SSLeay.pm	2017-03-21 17:08:57.991158946 -0700
++++ Net-SSLeay-1.80/inc/Module/Install/PRIVATE/Net/SSLeay.pm	2017-03-21 17:11:52.867951191 -0700
 @@ -24,20 +24,7 @@
      $self->requires_external_cc;
  
@@ -32,7 +32,7 @@ diff -Naur Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm Net-SSL
  
      my $opts = {
          lib_links  => [],
-@@ -209,71 +196,4 @@
+@@ -209,64 +196,6 @@
      return;
  }
  
@@ -94,13 +94,6 @@ diff -Naur Net-SSLeay-1.80.orig/inc/Module/Install/PRIVATE/Net/SSLeay.pm Net-SSL
 -    }
 -}
 -
--sub fixpath {
--    my ($self, $text) = @_;
--
--    my $sep = File::Spec->catdir('');
--    $text =~ s{\b/}{$sep}g;
--
--    return $text;
--}
--
- 1;
+ sub fixpath {
+     my ($self, $text) = @_;
+ 
